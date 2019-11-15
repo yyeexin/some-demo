@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://a.alipayobjects.com/g/datavis/china-geojson/1.0.0/index.js"></script>
+    <script src="https://unpkg.com/china-map-geojson@1.0.3/umd/china-map-geojson.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.5.1/dist/g2.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.1&key=0d78256ea89beeb8c25d1cd047549d1f"></script>
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+  </head>
+  <body>
+    <div id="china" style="display: inline-block;"></div>
+    <script>
+      //数据加工
+      function processData(mapData) {
+        const userData = [];
+        const features = mapData.features;
+        for (let i = 0; i < features.length; i++) {
+          const name = features[i].properties.name;
+          userData.push({
+            name: name,
+            value: Math.round(Math.random() * 100),
+            amount: Math.round(Math.random() * 100000)
+          });
+        }
+        const ds = new DataSet();
+        const geoDataView = ds.createView().source(mapData, {
+          type: "GeoJSON"
+        }); // geoJSON 经纬度数据
+
+        // 用户数据
+        const dvData = ds.createView().source(userData);
+        dvData.transform({
+          type: "geo.region",
+          field: "name",
+          geoDataView: geoDataView,
+          as: ["longitude", "latitude"]
+        });
+        return dvData;
+      }
+
+      let chart; //图标实例
+      let currentProvinceName; // 当前省名
+      let currentProvinceData; //当前省数据
+      let currentCityName; //当前市名
+      let currentCityData; //当前市数据
+
+      const NOT_OPEN_AREAS = ["新疆", "西藏", "青海", "甘肃", "内蒙古"];
+
+      renderChina();
+
+      //渲染中国地图
+      function renderChina() {
+        const mapData = ChinaGeoJSON["China"]; //中国数据
+        const chinaDv = processData(mapData);
+        const longitudeRange = chinaDv.range("longitude");
+        const latitudeRange = chinaDv.range("latitude");
+        const ratio =
+          (longitudeRange[1] - longitudeRange[0]) /
+          (latitudeRange[1] - latitudeRange[0]);
+        chart && chart.destroy();
+        chart = new G2.Chart({
+          container: "china",
+          width: 900,
+          height: 900 / ratio,
+          padding: 0
+        });
+        chart.source(chinaDv);
+        chart.tooltip({
+          showTitle: false
+        });
+        chart.axis(false);
+        chart
+          .polygon()
+          .position("longitude*latitude")
+          .tooltip("value")
+          .style({
+            stroke: "#bfbfbf",
+            lineWidth: 1,
+            fill: "#e3e3e3",
+            globalAlpha: 0.85,
+            cursor: "pointer" // 设置鼠标手势
+          })
+          .color("amount", "#d9f4ff-#33c5f6")
+          .label("name", {
+            offset: 0,
+            textStyle: {
+              fill: "#000",
+              fontSize: 10,
+              shadowBlur: 1,
+              shadowColor: "rgba(0, 0, 0, .45)"
+            }
+          });
+        // .select({
+        // 	mode: 'single', // 多选还是单选
+        // 	style: {
+        // 		fill: 'red' // 选中的样式
+        // 	}
+        // })
+        chart.render();
+
+        // 设置默认选中的省
+        // const shapes = chart.getAllGeoms()[0].getShapes()
+        // for (let i = 0, len = shapes.length; i < len; i++) {
+        // 	const shape = shapes[i]
+        // 	const origin = shape.get('origin')['_origin']
+        // 	const name = origin.name
+        // 	if (name === '浙江') {
+        // 		chart.getAllGeoms()[0].setShapeSelected(shape) // 设置中国地图上选中的省
+        // 	}
+        // }
+
+        //第一步: 中国地图, 点击监听渲染省地图
+        chart.on("plotclick", onChinaPlotClick);
+      }
+
+      function onChinaPlotClick(ev) {
+        const shape = ev.shape;
+        if (!shape || !shape.name) {
+          console.log("地图外");
+        } else {
+          const item = shape.get("origin");
+          const data = item["_origin"];
+          const name = data.name;
+          currentProvinceName = name;
+          console.log(name);
+          if (NOT_OPEN_AREAS.includes(name))
+            return alert("该区域暂未开放加盟!");
+          renderProvince(name);
+        }
+      }
+
+      function renderProvince(name) {
+        currentProvinceData = ChinaGeoJSON[name];
+        const dv = processData(currentProvinceData);
+        const longitudeRange = dv.range("longitude");
+        const latitudeRange = dv.range("latitude");
+        const ratio =
+          (longitudeRange[1] - longitudeRange[0]) /
+          (latitudeRange[1] - latitudeRange[0]);
+        let width;
+        let height;
+        if (ratio > 1) {
+          width = 800;
+          height = width / ratio;
+        } else {
+          width = 622 * ratio;
+          height = 622;
+        }
+        chart && chart.destroy();
+        chart = new G2.Chart({
+          container: "china",
+          width,
+          height,
+          padding: 0
+        });
+        chart.source(dv);
+        chart.axis(false);
+        chart.tooltip({
+          showTitle: false
+        });
+        chart
+          .polygon()
+          .position("longitude*latitude")
+          .label("name", {
+            offset: 0,
+            textStyle: {
+              fill: "#fff",
+              fontSize: 10,
+              shadowBlur: 2,
+              shadowColor: "rgba(0, 0, 0, .45)"
+            }
+          })
+          .style({
+            stroke: "#fff",
+            lineWidth: 1
+          })
+          .color("value", "#BAE7FF-#1890FF-#0050B3");
+        chart.render();
+
+        //第二步: 省地图, 点击监听渲染市地图
+        chart.on("plotclick", onProvincePlotClick);
+      }
+
+      function onProvincePlotClick(ev) {
+        const shape = ev.shape;
+        if (!shape || !shape.name) {
+          renderChina();
+        } else {
+          const item = shape.get("origin");
+          const data = item["_origin"];
+          const name = data.name;
+          currentCityName = name;
+          let currentCityInfo = currentProvinceData.features.find(
+            item => item.properties.name === name
+          );
+          getCityGeoJson(+currentCityInfo.id * 100, renderCity);
+        }
+      }
+
+      function getCityGeoJson(adcode, callback) {
+        new Promise(function(resolve, reject) {
+          AMapUI.load(["ui/geo/DistrictExplorer", "lib/$"], function(
+            DistrictExplorer
+          ) {
+            var districtExplorer = new DistrictExplorer();
+            districtExplorer.loadAreaNode(adcode, function(error, areaNode) {
+              if (error) reject(error);
+              var geoJSON = areaNode.getSubFeatures(); // 获取 geoJSON 数据
+              resolve(geoJSON);
+            });
+          });
+        }).then(function(geoJSON) {
+          currentCityData = {
+            type: "FeatureCollection",
+            features: geoJSON
+          };
+          callback(currentCityData);
+        });
+      }
+
+      function renderCity(currentCityData) {
+        const dv = processData(currentCityData);
+        const longitudeRange = dv.range("longitude");
+        const latitudeRange = dv.range("latitude");
+        const ratio =
+          (longitudeRange[1] - longitudeRange[0]) /
+          (latitudeRange[1] - latitudeRange[0]);
+        let width;
+        let height;
+        if (ratio > 1) {
+          width = 600;
+          height = width / ratio;
+        } else {
+          width = 450 * ratio;
+          height = 450;
+        }
+        chart && chart.destroy();
+        chart = new G2.Chart({
+          container: "china",
+          width,
+          height,
+          padding: 0
+        });
+        chart.source(dv);
+        chart.axis(false);
+        chart.tooltip({
+          showTitle: false
+        });
+        chart
+          .polygon()
+          .position("longitude*latitude")
+          .label("name", {
+            offset: 0,
+            textStyle: {
+              fill: "#fff",
+              fontSize: 10,
+              shadowBlur: 2,
+              shadowColor: "rgba(0, 0, 0, .45)"
+            }
+          })
+          .style({
+            stroke: "#fff",
+            lineWidth: 1
+          })
+          .color("value", "#BAE7FF-#1890FF-#0050B3");
+        chart.render();
+
+        //第三步: 省地图, 点击监听渲染市地图
+        chart.on("plotclick", onCityPlotClick);
+      }
+
+      function onCityPlotClick(ev) {
+        const shape = ev.shape;
+        if (!shape || !shape.name) {
+          renderProvince(currentProvinceName);
+        } else {
+          const item = shape.get("origin");
+          const data = item["_origin"];
+          const name = data.name;
+          alert(`加盟${name}`);
+        }
+      }
+    </script>
+  </body>
+</html>
