@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class Cat {
+				constructor() {
+					var heart = '❤️'
+					this.name = 'guaiguai'
+					this.jump = function() {}
+				}
+				color = 'white'
+				cleanTheBody = function() {
+					console.log('我会用唾液清洁身体')
+				}
+				hideTheShit() {
+					console.log('我在臭臭完之后会把它藏起来')
+				}
+			}
+			var guaiguai = new Cat()
+			console.log(guaiguai)
+			console.log(Object.keys(guaiguai))
+			guaiguai.cleanTheBody()
+			guaiguai.hideTheShit()
+
+			/** 
+            Cat {color: "white", name: "guaiguai", cleanTheBody: ƒ, jump: ƒ}
+            ["color", "cleanTheBody", "name", "jump"]
+            '我会用唾液清洁身体'
+            '我在臭臭完之后会把它藏起来'
+
+            在constructor中var一个变量，它只存在于constructor这个构造函数中
+            在constructor中使用this定义的属性和方法会被定义到实例上
+            在class中使用=来定义一个属性和方法，效果与第二点相同，会被定义到实例上
+            在class中直接定义一个方法，会被添加到原型对象prototype上
+
+            heart只能在constructor函数中使用，因此不会出现在实例上。
+            name、jump、color、cleanTheBody满足于上面👆说到的第二点和第三点
+            hideTheShit是在类里直接定义的，满足于上面👆说的第四点，因此它不会被Object.keys()获取到。
+            hideTheShit虽然是在原型对象中，但是也还是能被实例对象所调用，因此最后一段代码也会被执行'我在臭臭完之后会把它藏起来'
+            */
+		</script>
+	</body>
+</html>

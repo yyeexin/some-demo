@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function Cat() {
+				this.color = 'white'
+				this.getColor = function() {
+					console.log(this.color)
+				}
+			}
+			Cat.prototype.color = 'black'
+			var cat = new Cat()
+			cat.getColor()
+
+			/** 
+            当访问一个对象的属性 / 方法时，它不仅仅在该对象上查找，还会查找该对象的原型，以及该对象的原型的原型，一层一层向上查找，直到找到一个名字匹配的属性 / 方法或到达原型链的末尾（null）。
+            */
+		</script>
+	</body>
+</html>

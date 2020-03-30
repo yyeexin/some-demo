@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			//(原型对象本质也是个对象，所以它的__proto__也就是Object.prototype)
+			function Cat() {
+				this.color = 'white'
+				this.getColor = function() {
+					console.log(this.color)
+				}
+			}
+			Cat.prototype.color = 'black'
+			Object.prototype.color = 'yellow'
+			Object.prototype.feature = 'cute'
+			var cat = new Cat()
+			cat.getColor()
+			console.log(cat)
+			console.log(cat.feature)
+
+			/** 
+            'white'
+            Cat {color: "white", getColor: ƒ}
+            'cute'
+
+            color这个属性还是以它自身的white为主，但是feature这个属性没在实例cat上吧，
+            所以它就会向上一层一层查找，结果在Object.prototype中找到了，因此打印出cute。
+            */
+		</script>
+	</body>
+</html>

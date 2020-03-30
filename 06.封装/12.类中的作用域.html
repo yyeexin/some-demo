@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class Cat {
+				constructor() {
+					this.name = 'guaiguai'
+					var type = 'constructor'
+				}
+				type = 'class'
+				getType = function() {
+					console.log(this.type)
+					console.log(type)
+				}
+			}
+			var type = 'window'
+			var guaiguai = new Cat()
+			guaiguai.getType()
+
+			//调用getType函数的是guaiguai，所以里面的this指向了guaiguai，
+			//而guaiguai上的type为class当要打印出type的时候，发现getType函数中并没有这个变量，
+			//所以就向外层查找，找到了window中存在这个变量，因此打印出window。
+			//(var type = 'constructor'是函数constructor中的变量)
+		</script>
+	</body>
+</html>

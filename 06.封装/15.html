@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class Cat {
+				constructor() {
+					this.name = 'guaiguai'
+					var type = 'constructor'
+					this.getType = () => {
+						console.log(this.type)
+						console.log(type)
+					}
+				}
+				type = 'class'
+				getType = () => {
+					console.log(this.type)
+					console.log(type)
+				}
+			}
+
+			var type = 'window'
+			var guaiguai = new Cat()
+			guaiguai.getType()
+			console.log(guaiguai)
+
+			/**
+            'class'
+            'constructor'
+            Cat {type: "class", name: "guaiguai", getType: ƒ}
+
+            构造函数中的属性和方法会覆盖类中定义的属性和方法
+            */
+		</script>
+	</body>
+</html>

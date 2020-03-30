@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			var a = new A()
+			function A() {}
+			console.log(a)
+
+			var b = new B()
+			class B {}
+			console.log(b)
+
+			//那是因为，函数A是会被提升至作用域的最顶层，所以可以在定义函数A之前使用new A()
+			//但是类却不存在这种提升机制，所以当你执行new B()的时候它就会告诉你在B没有初始化之前不能使用它。
+		</script>
+	</body>
+</html>

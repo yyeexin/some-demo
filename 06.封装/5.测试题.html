@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function Person(name, sex) {
+				this.name = name
+				this.sex = sex
+				var evil = '我很邪恶'
+				var pickNose = function() {
+					console.log('我会扣鼻子但不让你看见')
+				}
+				this.drawing = function(type) {
+					console.log('我要画一幅' + type)
+				}
+			}
+			Person.fight = function() {
+				console.log('打架')
+			}
+			Person.prototype.wc = function() {
+				console.log('我是个人我会wc')
+			}
+			var p1 = new Person('lindaidai', 'boy')
+			console.log(p1.name)
+			console.log(p1.evil)
+			p1.drawing('国画')
+			p1.pickNose()
+			p1.fight()
+			p1.wc()
+			Person.fight()
+			Person.wc()
+			console.log(Person.sex)
+
+			/**
+            'lindaidai'
+            undefined
+            '我要画一幅国画'
+            Uncaught TypeError: p1.pickNose is not a function
+            Uncaught TypeError: p1.fight is not a function
+            '我是个人我会wc'
+            '打架'
+            Uncaught TypeError: Person.wc is not a function
+            undefined
+            */
+
+			/** 
+            解析：
+            name为公有属性，实例访问它打印出'lindaidai'
+            evil为私有属性，实例访问它打印出'undefined'
+            drawing是共有(实例)方法，实例调用它打印出'我要画一幅国画'
+            pickNose是私有方法，实例调用它会报错，因为它并不存在于实例上
+            fight是静态方法，实例调用它报错，因为它并不存在于实例上
+            wc存在于构造函数的原型对象中，使用实例调用它打印出'我是个我会wc'
+            fight存在于构造函数上，使用构造函数调用它打印出'打架'
+            wc存在于构造函数的原型对象中，并不存在于构造函数中，所以报错
+            sex为公有(实例)属性，并不存在于构造函数上，使用构造函数访问它为undefined
+
+            this.sex表示的是给使用构造函数创建的实例上增加属性sex，而不是给构造函数本身增加(只有Person.sex才是给构造函数上增加属性)。
+            */
+		</script>
+	</body>
+</html>
