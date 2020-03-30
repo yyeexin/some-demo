@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function Cat(name, color) {
+				var heart = '❤️'
+				var stomach = '胃'
+				var heartbeat = function() {
+					console.log(heart + '跳')
+				}
+				this.name = name
+				this.color = color
+				this.jump = function() {
+					heartbeat()
+					console.log('我跳起来了~来追我啊')
+				}
+			}
+			var guaiguai = new Cat('guaiguai', 'white')
+			console.log(guaiguai)
+			guaiguai.jump()
+
+			/**
+            在函数内用var定义的就是私有的
+            在函数内用this承接的就是公有
+            */
+		</script>
+	</body>
+</html>
