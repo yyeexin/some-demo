@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{name}}</p>
+			<p>{{name}}</p>
+			<p v-text="name"></p>
+			<p>{{age}}</p>
+			<p>{{age}}</p>
+			<input type="text" v-model="name" />
+			<br />
+			<button @click="changeName">按钮</button>
+			<div v-html="html"></div>
+		</div>
+		<script src="./compile.js"></script>
+		<script src="./simple-vue.js"></script>
+		<script>
+			let app = new Vue({
+				el: '#app',
+				data: {
+					name: 'yyeexin',
+					age: 12,
+					html: '<button>这是一个按钮</button>'
+				},
+				created() {
+					console.log('created函数执行!')
+				},
+				methods: {
+					changeName() {
+						this.name = 'Esan'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -5,7 +5,8 @@
 	"main": "05.wow.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"push": "git add . && git commit -m \"commit\" && git pull && git push"
+		"push": "git add . && git commit -m \"commit\" && git pull && git push",
+		"test-promise": "npx promises-aplus-tests ./01.Promise/Promise.js"
 	},
 	"repository": {
 		"type": "git",
@@ -23,5 +24,7 @@
 		"better-scroll": "^2.0.0-beta.8",
 		"normalize.css": "^8.0.1"
 	},
-	"devDependencies": {}
+	"devDependencies": {
+		"promises-aplus-tests": "^2.1.2"
+	}
 }
