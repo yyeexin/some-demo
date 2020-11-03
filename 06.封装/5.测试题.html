@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<script>
-			function Person(name, sex) {
-				this.name = name
-				this.sex = sex
-				var evil = '我很邪恶'
-				var pickNose = function() {
-					console.log('我会扣鼻子但不让你看见')
-				}
-				this.drawing = function(type) {
-					console.log('我要画一幅' + type)
-				}
-			}
-			Person.fight = function() {
-				console.log('打架')
-			}
-			Person.prototype.wc = function() {
-				console.log('我是个人我会wc')
-			}
-			var p1 = new Person('lindaidai', 'boy')
-			console.log(p1.name)
-			console.log(p1.evil)
-			p1.drawing('国画')
-			p1.pickNose()
-			p1.fight()
-			p1.wc()
-			Person.fight()
-			Person.wc()
-			console.log(Person.sex)
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function Person(name, sex) {
+                this.name = name;
+                this.sex = sex;
+                var evil = "我很邪恶";
+                var pickNose = function () {
+                    console.log("我会扣鼻子但不让你看见");
+                };
+                this.drawing = function (type) {
+                    console.log("我要画一幅" + type);
+                };
+            }
+            Person.fight = function () {
+                console.log("打架");
+            };
+            Person.prototype.wc = function () {
+                console.log("我是个人我会wc");
+            };
+            var p1 = new Person("lindaidai", "boy");
+            console.log(p1.name);
+            console.log(p1.evil);
+            p1.drawing("国画");
+            p1.pickNose();
+            p1.fight();
+            p1.wc();
+            Person.fight();
+            Person.wc();
+            console.log(Person.sex);
 
-			/**
+            /**
             'lindaidai'
             undefined
             '我要画一幅国画'
@@ -47,7 +47,7 @@
             undefined
             */
 
-			/** 
+            /** 
             解析：
             name为公有属性，实例访问它打印出'lindaidai'
             evil为私有属性，实例访问它打印出'undefined'
@@ -61,6 +61,6 @@
 
             this.sex表示的是给使用构造函数创建的实例上增加属性sex，而不是给构造函数本身增加(只有Person.sex才是给构造函数上增加属性)。
             */
-		</script>
-	</body>
+        </script>
+    </body>
 </html>

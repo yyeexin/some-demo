@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<script>
-			function Cat(name, color) {
-				var heart = '❤️'
-				var stomach = '胃'
-				var heartbeat = function() {
-					console.log(heart + '跳')
-				}
-				this.name = name
-				this.color = color
-				this.jump = function() {
-					heartbeat()
-					console.log('我跳起来了~来追我啊')
-				}
-			}
-			// 这段是新增的代码
-			Cat.descript = '我这个构造函数是用来生产出一只猫的'
-			Cat.actingCute = function() {
-				console.log('一听到猫我就想到了它会卖萌')
-			}
-			Cat.prototype.cleanTheBody = function() {
-				console.log('我会用唾液清洁身体')
-			}
-			var guaiguai = new Cat('guaiguai', 'white')
-			console.log(Cat.descript)
-			Cat.actingCute()
-			console.log(guaiguai.descript)
-			guaiguai.cleanTheBody()
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function Cat(name, color) {
+                var heart = "❤️";
+                var stomach = "胃";
+                var heartbeat = function () {
+                    console.log(heart + "跳");
+                };
+                this.name = name;
+                this.color = color;
+                this.jump = function () {
+                    heartbeat();
+                    console.log("我跳起来了~来追我啊");
+                };
+            }
+            // 这段是新增的代码
+            Cat.descript = "我这个构造函数是用来生产出一只猫的";
+            Cat.actingCute = function () {
+                console.log("一听到猫我就想到了它会卖萌");
+            };
+            Cat.prototype.cleanTheBody = function () {
+                console.log("我会用唾液清洁身体");
+            };
+            var guaiguai = new Cat("guaiguai", "white");
+            console.log(Cat.descript);
+            Cat.actingCute();
+            console.log(guaiguai.descript);
+            guaiguai.cleanTheBody();
 
-			//在构造函数上也就是使用Cat.xxx定义的是静态属性和方法
-			//在构造函数内使用this设置，或者设置在构造函数原型对象上比如Cat.prototype.xxx，就是公有属性和方法(实例方法)
-		</script>
-	</body>
+            //在构造函数上也就是使用Cat.xxx定义的是静态属性和方法
+            //在构造函数内使用this设置，或者设置在构造函数原型对象上比如Cat.prototype.xxx，就是公有属性和方法(实例方法)
+        </script>
+    </body>
 </html>

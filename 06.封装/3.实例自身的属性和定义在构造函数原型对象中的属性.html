@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<script>
-			function Cat(name) {
-				this.name = name
-			}
-			Cat.prototype.prototypeProp = '我是构造函数原型对象上的属性'
-			Cat.prototype.cleanTheBody = function() {
-				console.log('我会用唾液清洁身体')
-			}
-			var guaiguai = new Cat('guaiguai')
-			console.log(guaiguai)
-			console.log(guaiguai.name)
-			console.log(guaiguai.prototypeProp)
-			guaiguai.cleanTheBody()
-			//定义在构造函数原型对象上的属性和方法虽然不能直接表现在实例对象上，但是实例对象却可以访问或者调用它们
-		</script>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function Cat(name) {
+                this.name = name;
+            }
+            Cat.prototype.prototypeProp = "我是构造函数原型对象上的属性";
+            Cat.prototype.cleanTheBody = function () {
+                console.log("我会用唾液清洁身体");
+            };
+            var guaiguai = new Cat("guaiguai");
+            console.log(guaiguai);
+            console.log(guaiguai.name);
+            console.log(guaiguai.prototypeProp);
+            guaiguai.cleanTheBody();
+            //定义在构造函数原型对象上的属性和方法虽然不能直接表现在实例对象上，但是实例对象却可以访问或者调用它们
+        </script>
+    </body>
 </html>

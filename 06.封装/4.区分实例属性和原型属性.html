@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<script>
-			function Cat(name) {
-				this.name = name
-			}
-			Cat.prototype.prototypeProp = '我是构造函数原型对象上的属性'
-			Cat.prototype.cleanTheBody = function() {
-				console.log('我会用唾液清洁身体')
-			}
-			var guaiguai = new Cat('guaiguai')
-			for (key in guaiguai) {
-				if (guaiguai.hasOwnProperty(key)) {
-					console.log('我是自身属性', key)
-				} else {
-					console.log('我不是自身属性', key)
-				}
-			}
-			console.log('-分隔符-')
-			console.log(Object.keys(guaiguai))
-			console.log(Object.getOwnPropertyNames(guaiguai))
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function Cat(name) {
+                this.name = name;
+            }
+            Cat.prototype.prototypeProp = "我是构造函数原型对象上的属性";
+            Cat.prototype.cleanTheBody = function () {
+                console.log("我会用唾液清洁身体");
+            };
+            var guaiguai = new Cat("guaiguai");
+            for (key in guaiguai) {
+                if (guaiguai.hasOwnProperty(key)) {
+                    console.log("我是自身属性", key);
+                } else {
+                    console.log("我不是自身属性", key);
+                }
+            }
+            console.log("-分隔符-");
+            console.log(Object.keys(guaiguai));
+            console.log(Object.getOwnPropertyNames(guaiguai));
 
-			/** 
+            /** 
 			使用for...in...能获取到实例对象自身的属性和原型链上的属性
 			使用Object.keys()和Object.getOwnPropertyNames()只能获取实例对象自身的属性
 			可以通过.hasOwnProperty()方法传入属性名来判断一个属性是不是实例自身的属性
 			*/
-		</script>
-	</body>
+        </script>
+    </body>
 </html>
