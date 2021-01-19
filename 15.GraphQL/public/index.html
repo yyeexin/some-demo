@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>GraphQL</title>
-		<script>
-			function getDate() {
-				const query = `
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>GraphQL</title>
+        <script>
+            function getDate() {
+                const query = `
 					query getInfo($userName:String,$city:String){
 						hello(userName:$userName)
 						account(userName:$userName){
@@ -17,29 +17,29 @@
 							salary(city:$city)
 						}
 					}
-				`
-				const variables = {
-					userName: 'yexin',
-					city: '上海'
-				}
+				`;
+                const variables = {
+                    userName: "yexin",
+                    city: "上海",
+                };
 
-				fetch('/graphql', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Accept: 'application/json'
-					},
-					body: JSON.stringify({
-						query,
-						variables
-					})
-				})
-					.then(res => res.json())
-					.then(res => console.log(res))
-			}
-		</script>
-	</head>
-	<body>
-		<button onclick="getDate()">发送请求</button>
-	</body>
+                fetch("/graphql", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        query,
+                        variables,
+                    }),
+                })
+                    .then((res) => res.json())
+                    .then((res) => console.log(res));
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="getDate()">发送请求</button>
+    </body>
 </html>
