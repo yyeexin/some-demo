@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div
+            id="progress-bar"
+            style="background: pink; width: 0px; height: 20px"
+        ></div>
+        <button id="btn">开始</button>
+        <script>
+            let btn = document.getElementById("btn");
+            let bar = document.getElementById("progress-bar");
+            let start;
+
+            function progress() {
+                bar.style.width = bar.offsetWidth + 1 + "px";
+                bar.innerHTML = bar.offsetWidth + "%";
+                if (bar.offsetWidth < 100) {
+                    let current = Date.now();
+                    console.log(current - start);
+                    start = current;
+                    requestAnimationFrame(progress);
+                }
+            }
+
+            btn.addEventListener("click", () => {
+                bar.style.width = 0;
+                let current = Date.now();
+                start = current;
+                requestAnimationFrame(progress);
+            });
+        </script>
+    </body>
+</html>
